@@ -6,21 +6,33 @@ class CountersPresenter(private val view: MainView) {
 
 
     //Архитектурная ошибка. В качестве практического задания -- исправить
-    fun onCounterClick(id: Int) {
+
+/*    fun onCounterClick(id: Int) {
         when (id) {
             R.id.btnOne -> {
-                val newValue = model.next(0) // будут плодиться лишние ссылки
-                view.setText(newValue.toString(), 0)
-//                view.setText(model.next(0).toString(), 0) // вариант без создания лишних ссылок
+                view.setCounterText(model.next(0).toString(), 1)
             }
             R.id.btnTwo -> {
-                val newValue = model.next(1)
-                view.setText(newValue.toString(), 1)
+                view.setCounterText(model.next(1).toString(), 1)
             }
             R.id.btnThree -> {
-                val newValue = model.next(2)
-                view.setText(newValue.toString(), 2)
+                view.setCounterText(model.next(2).toString(), 2)
             }
         }
+    }*/
+
+    fun onClickCounterOne(counter: Int) {
+        val newResult = model.next(counter) // для наглядности, но ссылки плодиться будут
+        view.setCounterText(newResult.toString(), counter)
+    }
+
+    fun onClickCounterTwo(counter: Int) {
+        val newResult = model.next(counter) // для наглядности, но ссылки плодиться будут
+        view.setCounterText(newResult.toString(), counter)
+    }
+
+    fun onClickCounterThree(counter: Int) {
+        val newResult = model.next(counter) // для наглядности, но ссылки плодиться будут
+        view.setCounterText(newResult.toString(), counter)
     }
 }
