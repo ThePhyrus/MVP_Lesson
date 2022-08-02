@@ -36,7 +36,7 @@
         android:textSize="@dimen/counter_title_text_size" />
 
     <TextView
-        android:id="@+id/counterTwo"
+        android:id="@+id/tvCounterTwo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/counter_default_value"
@@ -50,14 +50,14 @@
         android:text="@string/_2" />
 
     <TextView
-        android:id="@+id/tvCounterThree"
+        android:id="@+id/tvTitleThree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/counter_three_title"
         android:textSize="@dimen/counter_title_text_size" />
 
     <TextView
-        android:id="@+id/counterThree"
+        android:id="@+id/tvCounterThree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/counter_default_value"
