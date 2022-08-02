@@ -6,53 +6,51 @@ import roman.bannikov.mvp_lesson_1.databinding.ActivityMainBinding
 
 private const val COUNTERS_KEY: String = "counters"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainView {
 
     private lateinit var binding: ActivityMainBinding
-    private val counters = mutableListOf(0, 0, 0)
+    private lateinit var presenter: CountersPresenter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initViews()
+        initPresenter()
 
         with(binding) {
             btnOne.setOnClickListener {
-                tvCounterOne.text = (++counters[0]).toString()
+                presenter.onCounterClick(R.id.btnOne)
             }
             btnTwo.setOnClickListener {
-                tvCounterTwo.text = (++counters[1]).toString()
+                presenter.onCounterClick(R.id.btnTwo)
             }
             btnThree.setOnClickListener {
-                tvCounterThree.text = (++counters[2]).toString()
+                presenter.onCounterClick(R.id.btnThree)
             }
         }
     }
 
-    private fun initViews() {
+    private fun initPresenter() {
+        presenter = CountersPresenter(this)
+    }
+
+
+    //Подсказка к ПЗ: поделить на 3 отдельные функции и избавиться от position
+    override fun setText(counter: String, position: Int) {
         with(binding) {
-            tvCounterOne.text = counters[0].toString()
-            tvCounterTwo.text = counters[1].toString()
-            tvCounterThree.text = counters[2].toString()
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putIntArray(COUNTERS_KEY, counters.toIntArray())
-
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        val array = savedInstanceState.getIntArray(COUNTERS_KEY)
-        counters.let { list ->
-            array?.toList()?.let {
-                list.addAll(it)
+            when (position) {
+                0 -> {
+                    tvCounterOne.text = counter
+                }
+                1 -> {
+                    tvCounterTwo.text = counter
+                }
+                2 -> {
+                    tvCounterThree.text = counter
+                }
             }
         }
-        initViews()
     }
 }
