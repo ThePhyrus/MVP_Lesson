@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MVP_Lesson_1</string>
+    <string name="counter_one_title">Counter one:</string>
+    <string name="counter_two_title">Counter two:</string>
+    <string name="counter_three_title">Counter three:</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
+    <string name="_1">1</string>
+    <string name="_0">0</string>
+</resources>
