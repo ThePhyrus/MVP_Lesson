@@ -1,38 +1,19 @@
 package roman.bannikov.mvp_lesson_1
 
-class CountersPresenter(private val view: MainView) {
+import moxy.MvpPresenter
 
-    private val model = CountersModel()
+class CountersPresenter(private val model: CountersModel) : MvpPresenter<MainView>() {
 
-
-    //Архитектурная ошибка. В качестве практического задания -- исправить
-
-/*    fun onCounterClick(id: Int) {
-        when (id) {
-            R.id.btnOne -> {
-                view.setCounterText(model.next(0).toString(), 1)
-            }
-            R.id.btnTwo -> {
-                view.setCounterText(model.next(1).toString(), 1)
-            }
-            R.id.btnThree -> {
-                view.setCounterText(model.next(2).toString(), 2)
-            }
-        }
-    }*/
-
-    fun onClickCounterOne(counter: Int) {
-        val newResult = model.next(counter) // для наглядности, но ссылки плодиться будут
-        view.setCounterText(newResult.toString(), counter)
+    fun onClickCounterOne() {
+        viewState.setTextOnCounterOne(model.next(0).toString())
     }
 
-    fun onClickCounterTwo(counter: Int) {
-        val newResult = model.next(counter) // для наглядности, но ссылки плодиться будут
-        view.setCounterText(newResult.toString(), counter)
+    fun onClickCounterTwo() {
+        viewState.setTextOnCounterTwo(model.next(1).toString())
     }
 
-    fun onClickCounterThree(counter: Int) {
-        val newResult = model.next(counter) // для наглядности, но ссылки плодиться будут
-        view.setCounterText(newResult.toString(), counter)
+    fun onClickCounterThree() {
+        viewState.setTextOnCounterThree(model.next(2).toString())
     }
+
 }

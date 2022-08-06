@@ -2,18 +2,15 @@ package roman.bannikov.mvp_lesson_1
 
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import moxy.MvpAppCompatActivity
+import moxy.ktx.moxyPresenter
 import roman.bannikov.mvp_lesson_1.databinding.ActivityMainBinding
 
 
-const val POS_ONE: Int = 0
-const val POS_TWO: Int = 1
-const val POS_THREE: Int = 2
-
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : MvpAppCompatActivity(), MainView {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var presenter: CountersPresenter
+    private val presenter by moxyPresenter { CountersPresenter(CountersModel()) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,68 +18,31 @@ class MainActivity : AppCompatActivity(), MainView {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initPresenter()
-
-/*        with(binding) {
-            btnOne.setOnClickListener {
-                presenter.onClickCounterOne(R.id.btnOne)
-            }
-            btnTwo.setOnClickListener {
-                presenter.onCounterClick(R.id.btnTwo)
-            }
-            btnThree.setOnClickListener {
-                presenter.onCounterClick(R.id.btnThree)
-            }
-        }*/
-
         with(binding) {
             btnOne.setOnClickListener {
-                presenter.onClickCounterOne(POS_ONE)
+                presenter.onClickCounterOne()
             }
             btnTwo.setOnClickListener {
-                presenter.onClickCounterTwo(POS_TWO)
+                presenter.onClickCounterTwo()
             }
             btnThree.setOnClickListener {
-                presenter.onClickCounterThree(POS_THREE)
+                presenter.onClickCounterThree()
             }
         }
     }
 
-    private fun initPresenter() {
-        presenter = CountersPresenter(this)
+
+    override fun setTextOnCounterOne(counter: String) = with(binding) {
+        tvCounterOne.text = counter
+    }
+
+    override fun setTextOnCounterTwo(counter: String) = with(binding) {
+        tvCounterTwo.text = counter
+    }
+
+    override fun setTextOnCounterThree(counter: String) = with(binding) {
+        tvCounterThree.text = counter
     }
 
 
-    //Подсказка к ПЗ: поделить на 3 отдельные функции и избавиться от position
-    //FIXME даже с подсказкой не понял(( Растолкуйте, что к чему, пожалуйста.
-    override fun setCounterText(text: String, position: Int) {
-
-/*        with(binding) {
-            when (position) {
-                0 -> {
-                    tvCounterOne.text = text
-                }
-                1 -> {
-                    tvCounterTwo.text = text
-                }
-                2 -> {
-                    tvCounterThree.text = text
-                }
-            }
-        }*/
-
-        with(binding) {
-            when (position) {
-                POS_ONE -> {
-                    tvCounterOne.text = text
-                }
-                POS_TWO -> {
-                    tvCounterTwo.text = text
-                }
-                POS_THREE -> {
-                    tvCounterThree.text = text
-                }
-            }
-        }
-    }
 }
