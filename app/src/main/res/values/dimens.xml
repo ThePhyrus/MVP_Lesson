@@ -4,4 +4,5 @@
     <dimen name="counter_title_text_size">16sp</dimen>
     <dimen name="padding_tv_user_login">16dp</dimen>
     <dimen name="text_size_tv_user_login">20sp</dimen>
+    <dimen name="margin_double">16dp</dimen>
 </resources>

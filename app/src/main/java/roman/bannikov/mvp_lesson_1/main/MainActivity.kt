@@ -2,19 +2,15 @@ package roman.bannikov.mvp_lesson_1.main
 
 
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import roman.bannikov.mvp_lesson_1.R
 import roman.bannikov.mvp_lesson_1.TheApp
-import roman.bannikov.mvp_lesson_1.adapters.UserAdapter
 import roman.bannikov.mvp_lesson_1.core.OnBackPressedListener
 import roman.bannikov.mvp_lesson_1.databinding.ActivityMainBinding
-import roman.bannikov.mvp_lesson_1.model.GithubUser
-import roman.bannikov.mvp_lesson_1.repository.implementations.GithubRepositoryImpl
 
-
+//todo разобраться почему не перекрывается надпись Activity
 class MainActivity : MvpAppCompatActivity(), MainView {
 
     private lateinit var binding: ActivityMainBinding
