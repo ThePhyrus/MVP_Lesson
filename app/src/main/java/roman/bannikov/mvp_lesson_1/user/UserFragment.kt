@@ -10,11 +10,12 @@ import moxy.ktx.moxyPresenter
 import roman.bannikov.mvp_lesson_1.TheApp
 import roman.bannikov.mvp_lesson_1.adapters.UserAdapter
 import roman.bannikov.mvp_lesson_1.core.OnBackPressedListener
+import roman.bannikov.mvp_lesson_1.core.OnUserNameClickListener
 import roman.bannikov.mvp_lesson_1.databinding.FragmentUserListBinding
 import roman.bannikov.mvp_lesson_1.model.GithubUser
 import roman.bannikov.mvp_lesson_1.repository.implementations.GithubRepositoryImpl
 
-class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
+class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener, OnUserNameClickListener {
 
     companion object {
         fun getInstance(): UserFragment {
@@ -67,6 +68,10 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onUserNameClick(name: String) {
+
     }
 
 }
