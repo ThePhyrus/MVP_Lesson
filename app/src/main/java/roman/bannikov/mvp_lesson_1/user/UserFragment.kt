@@ -1,18 +1,23 @@
 package roman.bannikov.mvp_lesson_1.user
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import roman.bannikov.mvp_lesson_1.R
 import roman.bannikov.mvp_lesson_1.TheApp
 import roman.bannikov.mvp_lesson_1.adapters.UserAdapter
 import roman.bannikov.mvp_lesson_1.core.OnBackPressedListener
 import roman.bannikov.mvp_lesson_1.core.OnUserNameClickListener
+import roman.bannikov.mvp_lesson_1.core.navigation.UsersScreens
 import roman.bannikov.mvp_lesson_1.databinding.FragmentUserListBinding
 import roman.bannikov.mvp_lesson_1.model.GithubUser
+import roman.bannikov.mvp_lesson_1.model.ThePerson
+import roman.bannikov.mvp_lesson_1.personal.PersonalFragment
 import roman.bannikov.mvp_lesson_1.repository.implementations.GithubRepositoryImpl
 
 class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener, OnUserNameClickListener {
@@ -60,19 +65,30 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener, On
         return presenter.onBackPressedInUserPresenter()
     }
 
+
+    override fun onUserNameClick(person: ThePerson) {
+        when(person.name){
+            "Roman" -> {
+                Log.d("@@@", "onUserNameClick: $person")
+            }
+        }
+        presenter.onUserNameClickInUserPresenter()
+    }
+
+
+
     override fun onDestroyView() {
         super.onDestroyView()
 
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
 
-    override fun onUserNameClick(name: String) {
 
-    }
 
 }
 

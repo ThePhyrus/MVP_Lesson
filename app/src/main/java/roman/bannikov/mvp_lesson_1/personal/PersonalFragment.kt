@@ -25,7 +25,7 @@ import roman.bannikov.mvp_lesson_1.user.UserPresenter
 import roman.bannikov.mvp_lesson_1.user.UserView
 
 
-class PersonalFragment : MvpAppCompatFragment(), PersonalView, OnBackPressedListener, OnUserNameClickListener {
+class PersonalFragment : MvpAppCompatFragment(), PersonalView, OnBackPressedListener {
 
     private var _binding :FragmentPersonalBinding? = null
     private val binding: FragmentPersonalBinding get() = _binding!!
@@ -45,10 +45,7 @@ class PersonalFragment : MvpAppCompatFragment(), PersonalView, OnBackPressedList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding) {
-            layoutPersonal = LinearLayoutManager(requireContext())
-            layoutPersonal.adapter = adapter
-        }
+
     }
 
 
@@ -56,9 +53,6 @@ class PersonalFragment : MvpAppCompatFragment(), PersonalView, OnBackPressedList
         return  presenter.onBackPressedInPersonalPresenter()
     }
 
-    override fun onUserNameClick(name: String) {
-        //todo открыть персональный экран пользователя
-    }
 
     override fun initList(list: List<ThePerson>) {
         //пока не придумал, что с ней делать

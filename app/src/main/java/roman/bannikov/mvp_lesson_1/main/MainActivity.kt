@@ -11,6 +11,9 @@ import roman.bannikov.mvp_lesson_1.core.OnBackPressedListener
 import roman.bannikov.mvp_lesson_1.databinding.ActivityMainBinding
 
 //todo разобраться почему не перекрывается надпись Activity
+//todo Реализуйте экран пользователя, на котором отобразите его логин.
+// Переход на экран осуществите по клику на пользователя в списке через router.navigateTo.
+
 class MainActivity : MvpAppCompatActivity(), MainView {
 
     private lateinit var binding: ActivityMainBinding

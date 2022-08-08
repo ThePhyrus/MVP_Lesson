@@ -47,4 +47,5 @@ class GithubUserViewHolder(itenView: View) : RecyclerView.ViewHolder(itenView) {
         tvLogin.text = login
     }*/
 
+
 }
