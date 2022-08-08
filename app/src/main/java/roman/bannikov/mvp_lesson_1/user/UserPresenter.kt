@@ -14,7 +14,7 @@ class UserPresenter(
         viewState.initList(repository.getUsers())
     }
 
-    fun onBackPressed(): Boolean {
+    fun onBackPressedInUserPresenter(): Boolean {
         router.exit()
         return true
     }

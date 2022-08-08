@@ -11,7 +11,7 @@ class MainPresenter(private val router: Router) : MvpPresenter<MainView>() {
         router.replaceScreen(UsersScreens)
     }
 
-    fun onBackPressed() {
+    fun onBackPressedFromMainPresenter() {
         router.exit()
     }
 

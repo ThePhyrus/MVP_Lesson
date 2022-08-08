@@ -55,8 +55,8 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
         //позже пригодится
     }
 
-    override fun onBackPressed(): Boolean {
-        return presenter.onBackPressed()
+    override fun onBackPressedFromInterface(): Boolean {
+        return presenter.onBackPressedInUserPresenter()
     }
 
     override fun onDestroyView() {
