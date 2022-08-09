@@ -5,14 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import roman.bannikov.mvp_lesson_1.TheApp
-import roman.bannikov.mvp_lesson_1.adapters.UserAdapter
 import roman.bannikov.mvp_lesson_1.core.OnBackPressedListener
 import roman.bannikov.mvp_lesson_1.databinding.FragmentUserListBinding
 import roman.bannikov.mvp_lesson_1.model.GithubUser
 import roman.bannikov.mvp_lesson_1.repository.implementations.GithubRepositoryImpl
+import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
 
@@ -45,6 +48,43 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
             rvGithubUsers.layoutManager = LinearLayoutManager(requireContext())
             rvGithubUsers.adapter = adapter
         }
+        showDelayExample()
+    }
+
+    private fun showDelayExample() {
+        val observableNames = Observable.just(
+            "One",
+            "Two",
+            "One",
+            "Two",
+            "Three",
+            "Four",
+            "One",
+            "Two",
+            "Three",
+            "Four"
+        )
+
+        observableNames
+            .flatMap { element ->
+                val delay = Random.nextInt(10000)
+                return@flatMap getUserInfo(element)
+                    .delay(delay.toLong(), TimeUnit.MILLISECONDS)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    binding.tvResult.text = it.toString()
+                    println(it)
+                },
+                { error ->
+                    println(error)
+                }
+            )
+    }
+
+    private fun getUserInfo(name: String): Observable<List<String>> {
+        return Observable.just(listOf(name, "email"))
     }
 
     override fun initList(list: List<GithubUser>) {

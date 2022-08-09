@@ -1,4 +1,4 @@
-package roman.bannikov.mvp_lesson_1.adapters
+package roman.bannikov.mvp_lesson_1.user
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
