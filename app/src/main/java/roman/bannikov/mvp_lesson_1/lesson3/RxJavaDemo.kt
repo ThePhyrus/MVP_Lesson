@@ -1,8 +1,14 @@
 package roman.bannikov.mvp_lesson_1.lesson3
 
+import android.util.Log
+import android.view.View
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
@@ -23,10 +29,62 @@ fun main() {
 //    showZipExample()
 //    showMergeWithExample()
 //    showFlatMapExample()
+//    showDelayExample()
+//    showSingleExample() //тут не запустится (просто сохранил код - он постоянно будет нужен)
 
 
-    showDelayExample()
 
+}
+
+
+
+
+
+private fun Disposable.disposeBy(bag: CompositeDisposable){
+    // private val bag = CompositeDisposable() // прописать вначале класса (фрагмента, адаптера)
+    bag.add(this)
+        // и не забыть в onDestroy() прописать bag.dispose()
+    //что такое диспоуз смотри на третьем уроке на 1:36
+}
+
+private fun showSingleExampleWithExtensionFunction() { // subscribeByDefault() ниже ↓ ↓ ↓ ↓
+ /*   binding.pBar.visibility = View.VISIBLE
+    Single.create<String> {
+        it.onSuccess("Chota tam")
+    }.subscribeByDefault()
+        .subscribe(
+            {
+                binding.tvResult.text = it
+                binding.pBar.visibility = View.GONE
+            },
+            {
+                Log.d("@@@", it.message ?: "ok")
+            }
+        )*/
+}
+
+private fun <T> Single<T>.subscribeByDefault(): Single<T> {
+    return this
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+}  // для функции выше  ↑ ↑ ↑ ↑
+
+private fun showSingleExample() {
+
+    val observable = Observable.just("One", "Two", "One", "Two")
+
+    Single.create<String> {
+        it.onSuccess("Chota tam")
+    }.subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+            { it ->
+
+            },
+            { error ->
+
+            }
+        )
 
 }
 
@@ -68,7 +126,7 @@ private fun showFlatMapExample() {
         )
 }
 
-private fun getUserInfo(name:String): Observable<List<String>>{
+private fun getUserInfo(name: String): Observable<List<String>> {
     return Observable.just(listOf(name, "email"))
 }
 
