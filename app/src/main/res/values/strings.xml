@@ -7,4 +7,7 @@
     <string name="_2">2</string>
     <string name="_1">1</string>
     <string name="counter_default_value">0</string>
+    <string name="user_login">User login</string>
+    <string name="activity">Activity</string>
+    <string name="tools_text">Tools text</string>
 </resources>
