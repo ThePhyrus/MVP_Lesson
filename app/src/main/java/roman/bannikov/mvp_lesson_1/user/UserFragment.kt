@@ -54,6 +54,14 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
         //позже пригодится
     }
 
+    override fun showProgressBar() {
+        binding.pBar.visibility = View.VISIBLE
+    }
+
+    override fun hideProgressBar() {
+        binding.pBar.visibility = View.GONE
+    }
+
     override fun onBackPressedFromInterface(): Boolean {
         return presenter.onBackPressedInUserPresenter()
     }

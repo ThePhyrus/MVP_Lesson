@@ -11,4 +11,8 @@ interface UserView : MvpView{
     fun initList(list: List<GithubUser>)
 
     fun updateList(list: List<GithubUser>, page: Int)
+
+    fun showProgressBar()
+
+    fun hideProgressBar()
 }
