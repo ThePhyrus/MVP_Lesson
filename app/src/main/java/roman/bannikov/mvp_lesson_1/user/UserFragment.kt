@@ -1,17 +1,10 @@
 package roman.bannikov.mvp_lesson_1.user
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import roman.bannikov.mvp_lesson_1.TheApp
@@ -19,8 +12,6 @@ import roman.bannikov.mvp_lesson_1.core.OnBackPressedListener
 import roman.bannikov.mvp_lesson_1.databinding.FragmentUserListBinding
 import roman.bannikov.mvp_lesson_1.model.GithubUser
 import roman.bannikov.mvp_lesson_1.repository.implementations.GithubRepositoryImpl
-import java.util.concurrent.TimeUnit
-import kotlin.random.Random
 
 class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
 
@@ -29,8 +20,6 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
             return UserFragment()
         }
     }
-
-    private val bag = CompositeDisposable()
 
     private var _binding: FragmentUserListBinding? = null
     private val binding: FragmentUserListBinding get() = _binding!!
@@ -55,61 +44,6 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
             rvGithubUsers.layoutManager = LinearLayoutManager(requireContext())
             rvGithubUsers.adapter = adapter
         }
-//        showDelayExample()
-        showSingleExample()
-    }
-
-
-
-    private fun showSingleExample() {
-        binding.pBar.visibility = View.VISIBLE
-        Single.create<String> {
-            it.onSuccess("Chota tam")
-        }.subscribe(
-            {
-                binding.tvResult.text = it
-                binding.pBar.visibility = View.GONE
-            },
-            {
-                Log.d("@@@", it.message ?: "ok")
-            }
-        ).disposeBy(bag)
-    }
-
-    private fun Disposable.disposeBy(bag: CompositeDisposable){
-        bag.add(this)
-    }
-
-
-    private fun <T> Single<T>.subscribeByDefault(): Single<T> {
-        return this
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
-    }
-
-    private fun showDelayExample() {
-        val observableNames = Observable.just("One", "Two", "One", "Two")
-
-        observableNames
-            .flatMap { element ->
-                val delay = Random.nextInt(10000)
-                return@flatMap getUserInfo(element)
-                    .delay(delay.toLong(), TimeUnit.MILLISECONDS)
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    binding.tvResult.text = it.toString()
-                    println(it)
-                },
-                { error ->
-                    println(error)
-                }
-            )
-    }
-
-    private fun getUserInfo(name: String): Observable<List<String>> {
-        return Observable.just(listOf(name, "email"))
     }
 
     override fun initList(list: List<GithubUser>) {
@@ -124,14 +58,8 @@ class UserFragment : MvpAppCompatFragment(), UserView, OnBackPressedListener {
         return presenter.onBackPressedInUserPresenter()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        bag.dispose()
         _binding = null
     }
 

@@ -1,7 +1,5 @@
 package roman.bannikov.mvp_lesson_1.lesson3
 
-import android.util.Log
-import android.view.View
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
@@ -12,11 +10,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
-
 private val dataSourceStr = listOf("A", "C", "B", "C", "D", "E", "F", "G", "A", "A", "C", "D", "C")
 private val dataSourceInt = listOf(1, 2, 3, 4, 3, 23, 98, 12, 31, 1, 2, 2, 2)
 private val dataSourceMix = listOf(1, 23, 98, 2, "C", "D", 2, 2, 2, 23, 12, 31, "B", "D", 1, 2)
-
 
 fun main() {
 //    showSimpleExample()
@@ -32,23 +28,17 @@ fun main() {
 //    showDelayExample()
 //    showSingleExample() //тут не запустится (просто сохранил код - он постоянно будет нужен)
 
-
-
 }
 
-
-
-
-
-private fun Disposable.disposeBy(bag: CompositeDisposable){
+private fun Disposable.disposeBy(bag: CompositeDisposable) {
     // private val bag = CompositeDisposable() // прописать вначале класса (фрагмента, адаптера)
     bag.add(this)
-        // и не забыть в onDestroy() прописать bag.dispose()
+    // и не забыть в onDestroy() прописать bag.dispose()
     //что такое диспоуз смотри на третьем уроке на 1:36
 }
 
 private fun showSingleExampleWithExtensionFunction() { // subscribeByDefault() ниже ↓ ↓ ↓ ↓
- /*   binding.pBar.visibility = View.VISIBLE
+    /*binding.pBar.visibility = View.VISIBLE
     Single.create<String> {
         it.onSuccess("Chota tam")
     }.subscribeByDefault()
@@ -60,7 +50,7 @@ private fun showSingleExampleWithExtensionFunction() { // subscribeByDefault() �
             {
                 Log.d("@@@", it.message ?: "ok")
             }
-        )*/
+        )*/ //не забывать про dispose() (lesson_3 01:36)
 }
 
 private fun <T> Single<T>.subscribeByDefault(): Single<T> {
@@ -70,29 +60,24 @@ private fun <T> Single<T>.subscribeByDefault(): Single<T> {
 }  // для функции выше  ↑ ↑ ↑ ↑
 
 private fun showSingleExample() {
-
-    val observable = Observable.just("One", "Two", "One", "Two")
-
+    val observableStr = Observable.just("One", "Two", "One", "Two")
     Single.create<String> {
         it.onSuccess("Chota tam")
     }.subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
-            { it ->
-
+            {
+                //do something
             },
-            { error ->
-
+            {
+                //do something
             }
         )
-
 }
 
 private fun showDelayExample() {
-    val observableNames = Observable.just("One", "Two", "Three", "Four")
-    val observableMail = Observable.just("one@mail.ru", "two@mail.ru", "three@mail.ru")
-
-    observableNames
+    val observableStr = Observable.just("One", "Two", "Three", "Four")
+    observableStr
         .flatMap { element ->
             val delay = Random.nextInt(1000)
             return@flatMap getUserInfo(element)
@@ -100,18 +85,16 @@ private fun showDelayExample() {
         }
         .subscribe(
             {
-                println(it)
+                //do something
             },
-            { error ->
-                println(error)
+            {
+                //do something
             }
         )
 }
 
 private fun showFlatMapExample() {
     val observableNames = Observable.just("One", "Two", "Three", "Four")
-    val observableMail = Observable.just("one@mail.ru", "two@mail.ru", "three@mail.ru")
-
     observableNames
         .flatMap { element ->
             return@flatMap getUserInfo(element)
@@ -133,7 +116,6 @@ private fun getUserInfo(name: String): Observable<List<String>> {
 private fun showMergeWithExample() {
     val observableNames = Observable.just("One", "Two", "Three", "Four")
     val observableMail = Observable.just("one@mail.ru", "two@mail.ru", "three@mail.ru")
-
     observableNames
         .mergeWith(observableMail)
         .subscribe(
@@ -253,25 +235,22 @@ private fun showSkipTakeOperatorsExample() {
 private fun showIterableExample() {
     Observable.just(1, 2, 21) //узнали, что такое есть и фсё
     Observable.just("one", "re", "sdf") //узнали, что такое есть и фсё
-
     //Пример поинтересней: эту запись используют почти всегда!
     Observable.just(dataSourceStr).subscribe(
         { element ->
             println(element)
         },
-        { error ->
-
+        { e ->
+            //do something
         }
     )
-
     println()
-
     Observable.fromIterable(dataSourceStr).subscribe(
         { element ->
             println(element)
         },
         { error ->
-
+            //do something
         }
     )
 }
